@@ -1,0 +1,22 @@
+--QUESTIONS 2
+--Q1) 사원테이블에서 사원 이름과 월급을 구하되, 월급을 내림차순으로 출력하자.
+SELECT ename, sal FROM emp
+ORDER BY sal DESC;
+
+--Q2) 사원테이블에서 직업별 평균 월급을 출력하되 컬럼 ALIAS를 '평균' 으로 하고, 평균 월급이 높은 순으로 정렬하자.
+SELECT job, avg(sal) AS "Average" FROM EMP 
+WHERE sal IS NOT NULL
+GROUP BY JOB
+ORDER BY avg(sal) DESC;
+
+--Q3) 사원테이블에서 직업별 총 월급을 구하고, 총 월급이 5000 이상인 것만 출력하자.
+SELECT job, sum(sal) FROM EMP 
+WHERE sal IS NOT NULL 
+HAVING sum(sal) >=5000
+GROUP BY job;
+
+--Q4) 사원테이블에서 부서별 월급의 합을 구하고, 그 총합이 1000 이상인 것만 출력하자.
+SELECT deptno, sum(sal) FROM EMP 
+WHERE sal IS NOT NULL 
+HAVING sum(sal) >= 1000
+GROUP BY deptno;
