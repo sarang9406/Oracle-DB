@@ -1,0 +1,60 @@
+--QUESTIONS 3
+--Q1) 사원 테이블에서 부서별 최대 월급을 출력하자.
+SELECT deptno, max(sal) FROM emp
+GROUP BY DEPTNO ;
+
+--Q2) 사원테이블에서 직업별 최소 월급을 구하되, 직업이 'CLERK' 인 것만 출력하자.
+SELECT job,min(sal) FROM EMP 
+WHERE job = 'CLERK'
+GROUP BY job;
+
+--Q3) 사원테이블에서 커미션이 책정된 사원은 모두 몇 명인지 출력하자.
+SELECT count(COMM) FROM EMP 
+--WHERE COMM IS NOT NULL;
+
+
+--Q4) 사원테이블에서 직업이 'SALESMAN'이고 월급이 1000 이상인 사원의 이름과 월급을 출력하자.
+SELECT ename, sal FROM EMP 
+WHERE job = 'SALESMAN' AND sal >=1000;
+
+--Q5) 사원테이블에서 부서별 평균 월급을 출력하되, 평균 월급이 2000보다 큰 부서의 부서번호와 평균 월급을 출력하자.
+SELECT deptno, avg(sal) FROM EMP 
+HAVING avg(sal)>2000
+GROUP BY deptno;
+
+--Q6) 사원테이블에서 직업이 'MANAGER' 인 사원을 출력하되, 월급이 높은 순으로 이름, 직업, 월급을 출력하자.(내림차순)
+SELECT job, ename, sal FROM EMP 
+WHERE job = 'MANAGER'
+ORDER BY 3 DESC;
+
+--Q7) 사원테이블에서 CUBE를 사용하여 각 직업별 총 월급을 출력하되 월급이 낮은 순으로 출력하자.(오름차순)
+SELECT job, sum(sal) FROM EMP 
+GROUP BY cube(job)
+ORDER BY sum(sal);
+
+--Q8) 사원테이블에서 직업별 총 월급을 출력하되, 직업이 'MANAGER'인 사원들은 제외하고, 총 월급이 5000보다 큰 직업만 출력하자.
+SELECT job, sum(sal) FROM emp
+WHERE job != 'MANAGER' 
+HAVING sum(sal)>5000
+GROUP BY job;
+
+--Q9) 사원테이블에서 직업별 최대 월급을 출력하되, 직업이 'CLERK' 인 사원들은 제외하고, 총 월급이 2000 이상인 직업과 최대월급을 오름차순으로 정렬하여 출력하자.
+SELECT job, max(sal) FROM EMP 
+WHERE job != 'CLERK'
+HAVING sum(sal)>=2000
+GROUP BY job
+ORDER BY max(Sal);
+
+--Q10) 사원테이블에서 부서별 총 월급을 출력하되, 30번 부서를 제외하고, 총 월급이 8000 이상인 부서를 총 월급이 높은 순으로 출력하자.(내림차순)
+SELECT deptno, sum(sal) FROM emp
+WHERE deptno <> 30
+HAVING sum(sal)>8000
+GROUP BY deptno
+ORDER BY sum(Sal) DESC;
+
+--Q11) 사원테이블에서 부서별 평균 월급을 출력하되, 커미션이 책정된 사원만 구하고, 평균 월급이 1000 달러 이상인 부서만 구하고, 평균 월급이 높은 순으로 출력하자.(내림차순)
+SELECT avg(sal), deptno FROM EMP 
+WHERE comm IS NOT NUll
+HAVING avg(sal)>=1000
+GROUP BY deptno
+ORDER BY avg(sal) DESC;
