@@ -18,7 +18,8 @@ FROM regions JOIN COUNTRIES using(region_id)
 			 JOIN EMPLOYEES USING (department_id)
 WHERE region_name = 'Europe';
 
--- 4. 부서번호, 부서명와 각 부서별로 근무하고 있는 직원의 수 alias NUM_OF_EMP, 부서번호로 오름차순으로 정렬해서 출력 (null일 경우 N/A로 출력되게 하자)
+-- 4. 부서번호, 부서명와 각 부서별로 근무하고 있는 직원의 수 alias NUM_OF_EMP, 부서번호로 오름차순으로 정렬해서 출력 
+--	(null일 경우 N/A로 출력되게 하자)
 SELECT d.department_id,	department_name, 
 	CASE WHEN count(EMPLOYEE_ID)= 0 THEN 'N/A'
 	     WHEN count(EMPLOYEE_ID)> 0 THEN to_char(count(EMPLOYEE_ID))
@@ -33,7 +34,8 @@ SELECT FIRST_NAME||' '|| LAST_NAME "Full Name", TO_CHAR((SALARY *12+salary*NVL(c
 FROM EMPLOYEES e2;
 
 --6. 나라별로 가장 많은 연봉을 받는 직원의 성과 이름, 부서이름, 연봉을 출력
-SELECT country_name, first_name||' '||last_name AS "EMPLOYEE NAME", department_name, SALARY * 12 + salary*NVL(commission_pct, 0) AS "SALARY"
+SELECT country_name, first_name||' '||last_name AS "EMPLOYEE NAME", department_name, 
+       SALARY * 12 + salary*NVL(commission_pct, 0) AS "SALARY"
 FROM COUNTRIES JOIN LOCATIONS USING (country_id)
 	       JOIN DEPARTMENTS	USING(location_id)
 	       JOIN EMPLOYEES USING (department_id)
